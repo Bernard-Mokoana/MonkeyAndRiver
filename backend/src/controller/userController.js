@@ -134,14 +134,28 @@ export const getUserProfile = async (req, res) => {
 
 export const updateUserProfile = async (req, res) => {
   try {
+    const { firstName, lastName, email, password, settings } = req.body;
+
     const User = await user.findById(req.user._id);
 
     if (!User) return res.status(404).json({ message: "user not found" });
 
-    user.name = req.body.name || user.name;
-    user.email = req.body.email || user.email;
+    User.firstName = req.body.firstName || User.firstName;
+    User.lastName = req.body.lastName || User.lastName;
+    User.email = req.body.email || User.email;
     if (req.body.password) {
-      user.password = await bcrypt.hash(req.body.password, 10);
+      User.password = await bcrypt.hash(req.body.password, 10);
+    }
+
+    if (settings) {
+      user.settings.emailAlerts =
+        settings.emailAlerts !== undefined
+          ? settings.emailAlerts
+          : user.settings.emailAlerts;
+      user.settings.notificationThreshold =
+        settings.notificationThreshold !== undefined
+          ? settings.notificationThreshold
+          : user.settings.notificationThreshold;
     }
 
     const updated = await user.save();
