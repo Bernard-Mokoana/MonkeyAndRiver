@@ -39,6 +39,14 @@ const userSchema = new Schema(
       enum: ["Low", "Moderate", "High", "Extreme"],
       default: "Moderate",
     },
+
+    settings: {
+      emailAlerts: {
+        type: Boolean,
+        default: true,
+      },
+      notificationThreshold: { type: Number, default: 5 },
+    },
   },
   {
     timestamps: true,
