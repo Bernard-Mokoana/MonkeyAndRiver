@@ -21,10 +21,12 @@ app.use(
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-import userRouter from "./routes/userRoute.js";
-import monitorDestination from "./routes/monitorDestinationRoute.js";
+import userRoutes from "./routes/userRoute.js";
+import monitorDestinationRoutes from "./routes/monitorDestinationRoute.js";
+import healthRoutes from "./routes/healthRoute.js";
 
-app.use("/api/v1/users", userRouter);
-app.use("/api/v1/destinations", monitorDestination);
+app.use("/api/v1/users", userRoutes);
+app.use("/api/v1/destinations", monitorDestinationRoutes);
+app.use("/api/v1/healthcheck", healthRoutes);
 
 export default app;
